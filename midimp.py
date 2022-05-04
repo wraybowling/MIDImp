@@ -14,13 +14,19 @@ from pythonosc import osc_message_builder
 
 # Commandline Arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("--ip", default="127.0.0.1",
+parser.add_argument("--ip",
     help="The ip of the OSC server")
 parser.add_argument("--port", type=int, default=9000,
     help="The port the OSC server is listening on")
 parser.add_argument('--device', type=int,
     help="The MIDI input device to send")
 args = parser.parse_args()
+
+
+# Choose PS4/PS5 IP Address
+
+if args.ip is None:
+    args.ip = input('Type in the IP address of your PS4/PS5 (skip next time with --ip): ')
 
 
 # Choose MIDI input
@@ -36,7 +42,7 @@ if args.device is None:
     print_ports('Input Ports:', input_port_options)
     print_ports('Output Ports:', mido.get_output_names())
 
-    portname = input_port_options[int(input('Choose input: '))]
+    portname = input_port_options[int(input('Choose MIDI device (skip next time with (--device): '))]
 else:
     portname = input_port_options[args.device]
 
