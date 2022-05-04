@@ -5,12 +5,28 @@ headless script to send MIDI over OSC to your PS4/PS5
 
 ## Install
 
+The script is written in Python 3 and requires installing a few open source packages. To make installation more clean for your personal computer, a virtual environment is used. This means you can install these dependencies without making a mess of your own machine, and when the day comes that you decide to delete the MIDImp folder, everything will go along with it.
+
+### Activate Virtual Environment
+
+You can either activate the virtual environment manually using the scripts below or open the project in VS Code which will detect it automatically.
+
+For Powershell (Windows)
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+For Shell (MacOS & Linux)
+```sh
+source .venv/bin/activate
+```
+
+### Fetch Dependencies
+
 ```sh
 python3 -m venv .venv
 python3 -m pip3 install -r requirements.txt
 ```
-
-The script is written in Python 3 and requires installing a few open source packages. To make installation more clean for your personal computer, a virtual environment is used. This means you can install these dependencies without making a mess of your own machine, and when the day comes that you decide to delete the MIDImp folder, everything will go along with it.
 
 
 ## Run
