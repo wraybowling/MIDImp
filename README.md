@@ -22,7 +22,7 @@ You will be prompted to provide the IP address of your PS4/PS5 and which MIDI de
 ## Run Without Menu
 
 ```sh
-python3 midimp.py --ip=192.168.1.100 --midi-input=1
+python3 midimp.py --ip=192.168.1.100 --device=1
 ```
 
 You may want the option to bypass the menus so you can do things like run MIDImp at startup. Providing arguments on the commandline will do this.
