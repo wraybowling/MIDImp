@@ -1,6 +1,8 @@
 # MIDImp
 headless script to send MIDI over OSC to your PS4/PS5
 
+![MIDImp promotional image](https://repository-images.githubusercontent.com/482833910/1803727c-044f-4e8a-bbbc-6d7e55e19884)
+
 ## Install
 
 ```sh
