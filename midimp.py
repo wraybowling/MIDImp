@@ -24,7 +24,6 @@ args = parser.parse_args()
 
 
 # Choose PS4/PS5 IP Address
-
 if args.ip is None:
     args.ip = input('Type in the IP address of your PS4/PS5 (skip next time with --ip): ')
 
@@ -40,7 +39,7 @@ if args.device is None:
         print()
 
     print_ports('Input Ports:', input_port_options)
-    print_ports('Output Ports:', mido.get_output_names())
+    # print_ports('Output Ports:', mido.get_output_names())
 
     portname = input_port_options[int(input('Choose MIDI device (skip next time with (--device): '))]
 else:
@@ -59,12 +58,31 @@ try:
         print('Using {}'.format(port))
         print('Waiting for messages...')
         for message in port:
-            print('Received {} {}'.format(message, message.bytes()))
-            midi_bytes = message.bytes()
-            builder = osc_message_builder.OscMessageBuilder(address="/notes")
-            builder.add_arg((1, midi_bytes[0], midi_bytes[1], midi_bytes[2]), builder.ARG_TYPE_MIDI)
-            bundle = builder.build()
-            client.send_message("/notes", bundle)
+            if( any([
+                message.type == 'note_on',
+                message.type == 'note_off',
+                message.type == 'control_change',
+                message.type == 'aftertouch',
+                message.type == 'pitchwheel',
+                # message.type == 'start',
+                # message.type == 'continue',
+                # message.type == 'stop',
+                # message.type == 'reset',
+            ]) ):
+                
+                #change zero velocity note_on messages to note_off messages
+                if(message.type == 'note_on' and message.velocity == 0):
+                    message = mido.Message('note_off', channel=message.channel, note=message.note, time=message.time)
+
+                # always use channel 0
+                message = message.copy(channel = 0)
+
+                midi_bytes = message.bytes()
+                print('Received {} {}'.format(message, midi_bytes))
+                builder = osc_message_builder.OscMessageBuilder(address="/notes")
+                builder.add_arg((1, midi_bytes[0], midi_bytes[1], midi_bytes[2]), builder.ARG_TYPE_MIDI)
+                bundle = builder.build()
+                client.send_message("/notes", bundle)
             sys.stdout.flush()
 except KeyboardInterrupt:
     pass
