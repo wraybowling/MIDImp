@@ -61,9 +61,9 @@ try:
             if( any([
                 message.type == 'note_on',
                 message.type == 'note_off',
-                message.type == 'control_change',
-                message.type == 'aftertouch',
-                message.type == 'pitchwheel',
+                # message.type == 'control_change',
+                # message.type == 'aftertouch',
+                # message.type == 'pitchwheel',
                 # message.type == 'start',
                 # message.type == 'continue',
                 # message.type == 'stop',
